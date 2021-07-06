@@ -51,7 +51,9 @@ class HomeModel {
   HomeModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new HomeDataModel.fromJson(json['data']) : null;
+    data =
+        json['data'] != null ? new HomeDataModel.fromJson(json['data']) : null;
+
   }
 
 /*  Map<String, dynamic> toJson() {
@@ -68,26 +70,19 @@ class HomeModel {
 class HomeDataModel {
   List<BannersModel> banners = [];
   List<Products> products = [];
-  String ad ;
+  String ad;
 
   HomeDataModel({this.banners, this.products, this.ad});
 
   HomeDataModel.fromJson(Map<String, dynamic> json) {
+    json['banners'].forEach((element) {
+      banners.add(element);
+    });
 
-    json['banners'].forEach(
-        (element)
-        {
-          banners.add(element);
-        }
-    );
-
-    json['products'].forEach(
-            (element)
-        {
-          banners.add(element);
-        }
-    );
-   /*  if (json['banners'] != null) {
+    json['products'].forEach((element) {
+      banners.add(element);
+    });
+    /*  if (json['banners'] != null) {
       banners = new List<Banners>();
       json['banners'].forEach((v) {
         banners.add(new Banners.fromJson(v));
@@ -101,7 +96,6 @@ class HomeDataModel {
       });
     }
     ad = json['ad'];*/
-
   }
 /*
   Map<String, dynamic> toJson() {
@@ -122,7 +116,10 @@ class BannersModel {
   int id;
   String image;
 
-  BannersModel({this.id, this.image,});
+  BannersModel({
+    this.id,
+    this.image,
+  });
 
   BannersModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -174,6 +171,7 @@ class Products {
   List<String> images;
   bool inFavorites;
   bool inCart;
+
 /*
 
   Products(
@@ -217,3 +215,5 @@ class Products {
     return data;
   }*/
 }
+
+

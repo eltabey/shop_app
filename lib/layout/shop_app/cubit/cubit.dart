@@ -39,14 +39,13 @@ class ShopCubit extends Cubit<ShopStates> {
       url: HOME,
       token: token,
     ).then((value) {
+      pipe(value.data);
       homeModel = HomeModel.fromJson(value.data);
-      print(homeModel.data.banners);
+
       print(homeModel.data.banners[0].image);
-
-      print('gat han0');
-
-      print(homeModel.toString());
+      print(homeModel.status);
       print('gat han1');
+
       emit(ShopSuccessHomeDataStates());
     }).catchError((error) {
       print(error.toString());
