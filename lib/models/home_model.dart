@@ -53,7 +53,6 @@ class HomeModel {
     message = json['message'];
     data =
         json['data'] != null ? new HomeDataModel.fromJson(json['data']) : null;
-
   }
 
 /*  Map<String, dynamic> toJson() {
@@ -75,17 +74,11 @@ class HomeDataModel {
   HomeDataModel({this.banners, this.products, this.ad});
 
   HomeDataModel.fromJson(Map<String, dynamic> json) {
-    json['banners'].forEach((element) {
-      banners.add(element);
-    });
-
-    json['products'].forEach((element) {
-      banners.add(element);
-    });
-    /*  if (json['banners'] != null) {
-      banners = new List<Banners>();
+    //print("banners json list => ${json['banners']}");
+    if (json['banners'] != null) {
+      banners = new List<BannersModel>();
       json['banners'].forEach((v) {
-        banners.add(new Banners.fromJson(v));
+        banners.add(new BannersModel.fromJson(v));
       });
     }
 
@@ -95,7 +88,7 @@ class HomeDataModel {
         products.add(new Products.fromJson(v));
       });
     }
-    ad = json['ad'];*/
+    ad = json['ad'];
   }
 /*
   Map<String, dynamic> toJson() {
@@ -215,5 +208,3 @@ class Products {
     return data;
   }*/
 }
-
-
