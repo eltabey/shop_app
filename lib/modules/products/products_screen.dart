@@ -27,6 +27,7 @@ class ProductsScreen extends StatelessWidget {
   Widget productsBuilder(HomeModel model) => SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CarouselSlider(
               items: model.data.banners
@@ -58,6 +59,38 @@ class ProductsScreen extends StatelessWidget {
             ),
             SizedBox(
               height: 20.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Categories',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Container(
+                    height: 100,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemBuilder: (context,index) => buildCategoriesItems(),
+                      separatorBuilder: (context,index) => SizedBox(width: 10,),
+                      itemCount: 10,
+                    ),
+                  ),
+                  Text(
+                    'New Products',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
             ),
             Container(
               color: Colors.grey[300],
@@ -144,7 +177,10 @@ class ProductsScreen extends StatelessWidget {
                       Spacer(),
                       IconButton(
                         padding: EdgeInsets.zero,
-                        icon: Icon(Icons.favorite_border,size: 14.0,),
+                        icon: Icon(
+                          Icons.favorite_border,
+                          size: 14.0,
+                        ),
                         onPressed: () {},
                       )
                     ],
@@ -153,6 +189,39 @@ class ProductsScreen extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      );
+
+  Widget buildCategoriesItems() => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          width: 100,
+          height: 100,
+          child: Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              Image(
+                image: NetworkImage(
+                    "https://student.valuxapps.com/storage/uploads/categories/1618883074tPenb.super.png"),
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+              Container(
+                color: Colors.black.withOpacity(0.8),
+                width: double.infinity,
+                child: Text(
+                  'Electonex',
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       );
 }

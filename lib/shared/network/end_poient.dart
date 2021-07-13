@@ -1,4 +1,5 @@
-const LOGIN ='login';
+const LOGIN = 'login';
 
-const HOME ='home';
+const HOME = 'home';
 
+const GET_CATEGORIES = 'categories';

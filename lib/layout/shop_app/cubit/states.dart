@@ -10,6 +10,12 @@ class ShopSuccessHomeDataStates extends ShopStates {}
 
 class ShopErrorHomeDataStates extends ShopStates {}
 
+
+class ShopSuccessCategoriesStates extends ShopStates {}
+
+class ShopErrorCategoriesStates extends ShopStates {}
+
+
 /*
 
 
