@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/shop_app/cubit/states.dart';
+import 'package:shop_app/models/categories_model.dart';
 import 'package:shop_app/models/home_model.dart';
 import 'package:shop_app/modules/cateogries/categories_screen.dart';
 import 'package:shop_app/modules/favorites/favorites_screen.dart';
@@ -31,6 +32,8 @@ class ShopCubit extends Cubit<ShopStates> {
     emit(ShopChangeBottomNavStates());
   }
 
+
+
   HomeModel homeModel;
 
   void getHomeData() {
@@ -39,20 +42,45 @@ class ShopCubit extends Cubit<ShopStates> {
       url: HOME,
       token: token,
     ).then((value) {
-
+/*
       print('value 1');
-      print(value);
+      print(value);*/
       homeModel = HomeModel.fromJson(value.data);
 
       // print(homeModel.data.banners[0].image);
       // print(homeModel.status);
-      print('gat han1');
+      print('gat han HomeData 1');
 
       emit(ShopSuccessHomeDataStates());
+    }).catchError((error) {
+      print(error.toString());
+      print('gat han2');
+      emit(ShopErrorCategoriesStates());
+    });
+  }
+
+
+  CategoriesModel categoriesModel;
+
+  void getCategories() {
+    DioHelper.getData(
+      url: GET_CATEGORIES,
+      //token: token,
+    ).then((value) {
+
+      print('value of Categories');
+      print(value);
+      categoriesModel = CategoriesModel.fromJson(value.data);
+
+      print(value.data);
+      print('gat han Categories 1');
+
+      emit(ShopSuccessCategoriesStates());
     }).catchError((error) {
       print(error.toString());
       print('gat han2');
       emit(ShopErrorHomeDataStates());
     });
   }
+
 }

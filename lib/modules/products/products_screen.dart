@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/shop_app/cubit/cubit.dart';
 import 'package:shop_app/layout/shop_app/cubit/states.dart';
+import 'package:shop_app/models/categories_model.dart';
 import 'package:shop_app/models/home_model.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -15,16 +16,19 @@ class ProductsScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: ShopCubit.get(context).homeModel != null,
-          builder: (context) =>
-              productsBuilder(ShopCubit.get(context).homeModel),
+          condition: ShopCubit.get(context).homeModel != null &&
+              ShopCubit.get(context).categoriesModel != null,
+          builder: (context) => productsBuilder(
+              ShopCubit.get(context).homeModel,
+              ShopCubit.get(context).categoriesModel),
           fallback: (context) => Center(child: CircularProgressIndicator()),
         );
       },
     );
   }
 
-  Widget productsBuilder(HomeModel model) => SingleChildScrollView(
+  Widget productsBuilder(HomeModel model, CategoriesModel categoriesModel) =>
+      SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,9 +81,12 @@ class ProductsScreen extends StatelessWidget {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      itemBuilder: (context,index) => buildCategoriesItems(),
-                      separatorBuilder: (context,index) => SizedBox(width: 10,),
-                      itemCount: 10,
+                      itemBuilder: (context, index) => buildCategoriesItems(
+                          categoriesModel.data.data[index]),
+                      separatorBuilder: (context, index) => SizedBox(
+                        width: 10,
+                      ),
+                      itemCount: categoriesModel.data.data.length,
                     ),
                   ),
                   Text(
@@ -100,7 +107,7 @@ class ProductsScreen extends StatelessWidget {
                 crossAxisCount: 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10.0,
-                childAspectRatio: 1 / 1.56,
+                childAspectRatio: 1 / 1.64,
                 children: List.generate(
                   model.data.products.length,
                   (index) => buildGridProducts(model.data.products[index]),
@@ -111,7 +118,8 @@ class ProductsScreen extends StatelessWidget {
         ),
       );
 
-  Widget buildGridProducts(Products model) => Container(
+  Widget buildGridProducts(Products model) =>
+      Container(
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,7 +200,7 @@ class ProductsScreen extends StatelessWidget {
         ),
       );
 
-  Widget buildCategoriesItems() => Padding(
+  Widget buildCategoriesItems([DataModel model]) => Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
           width: 100,
@@ -201,8 +209,7 @@ class ProductsScreen extends StatelessWidget {
             alignment: AlignmentDirectional.bottomCenter,
             children: [
               Image(
-                image: NetworkImage(
-                    "https://student.valuxapps.com/storage/uploads/categories/1618883074tPenb.super.png"),
+                image: NetworkImage(model.image),
                 width: 100,
                 height: 100,
                 fit: BoxFit.cover,
@@ -211,7 +218,7 @@ class ProductsScreen extends StatelessWidget {
                 color: Colors.black.withOpacity(0.8),
                 width: double.infinity,
                 child: Text(
-                  'Electonex',
+                  model.name,
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

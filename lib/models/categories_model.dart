@@ -22,7 +22,7 @@ class CategoriesModel {
 
 class CategoriesDataModel {
   int currentPage;
-  List<CategoriesDataModel> data;
+  List<DataModel> data;
   String firstPageUrl;
   int from;
   int lastPage;
@@ -54,9 +54,9 @@ class CategoriesDataModel {
   {
     currentPage = json['current_page'];
     if (json['data'] != null) {
-      data = new List<CategoriesDataModel>();
+      data = new List<DataModel>();
       json['data'].forEach((v) {
-        data.add(new CategoriesDataModel.fromJson(v));
+        data.add(new DataModel.fromJson(v));
       });
     }
     firstPageUrl = json['first_page_url'];
