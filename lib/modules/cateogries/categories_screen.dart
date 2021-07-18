@@ -13,15 +13,15 @@ class CategoriesScreen extends StatelessWidget {
     return BlocConsumer<ShopCubit, ShopStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          return Text('data');
-         /* return ListView.separated(
-            itemBuilder: (context, index) => buildCategoriesItem(ShopCubit().categoriesModel.data.data[index]),
+          return ListView.separated(
+            itemBuilder: (context, index) => buildCategoriesItem(ShopCubit.get(context).categoriesModel.data.data[index]),
             separatorBuilder: (context, index) => myDivider(),
-            itemCount: ShopCubit().categoriesModel.data.data.length,
-          );*/
+            itemCount: ShopCubit.get(context).categoriesModel.data.data.length,
+          );
         });
   }
-  /*Widget buildCategoriesItem([DataModel model]) => Padding(
+
+  Widget buildCategoriesItem([DataModel model]) => Padding(
         padding: const EdgeInsets.all(15.0),
         child: Row(
           children: [
@@ -47,5 +47,5 @@ class CategoriesScreen extends StatelessWidget {
             ),
           ],
         ),
-      );*/
+      );
 }
