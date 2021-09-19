@@ -14,7 +14,8 @@ class CategoriesScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return ListView.separated(
-            itemBuilder: (context, index) => buildCategoriesItem(ShopCubit.get(context).categoriesModel.data.data[index]),
+            itemBuilder: (context, index) => buildCategoriesItem(
+                ShopCubit.get(context).categoriesModel.data.data[index]),
             separatorBuilder: (context, index) => myDivider(),
             itemCount: ShopCubit.get(context).categoriesModel.data.data.length,
           );

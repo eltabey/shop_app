@@ -22,7 +22,7 @@ void main() async {
   String token = CacheHelper.getData(key: 'token');
 
   token = CacheHelper.getData(key: 'token');
-
+  print(token);
 
   if (onBoarding != null) {
     if (token != null)
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) =>LoginCubit()..userLogin(),
         ),
         BlocProvider(
-          create: (BuildContext context) =>ShopCubit()..getHomeData()..getCategories(),
+          create: (BuildContext context) =>ShopCubit()..getHomeData()..getFavorites()..getCategories()..getUserModel(),
         ),
       ],
       child: BlocConsumer<AppCubit,AppStates>(
@@ -74,6 +74,7 @@ class MyApp extends StatelessWidget {
                 elevation: 20.0,
                 //backgroundColor: HexColor('333739'),
               ),
+
               primarySwatch: Colors.orange,
               fontFamily: 'jannah',
               //visualDensity: VisualDensity.adaptivePlatformDensity,
