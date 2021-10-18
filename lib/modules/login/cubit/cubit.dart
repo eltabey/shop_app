@@ -18,6 +18,7 @@ class LoginCubit extends Cubit<LoginStates> {
     @required String email,
     @required String password,
   }) {
+    print('login from main');
     emit(LoginLoadingState());
     DioHelper.pastData(url: LOGIN, data: {
       'email': email,

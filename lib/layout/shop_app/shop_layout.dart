@@ -13,7 +13,10 @@ class ShopLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ShopCubit()..getHomeData()..getCategories(),
+      create: (BuildContext context) => ShopCubit()
+        ..getHomeData()
+        ..getCategories(),
+
       child: BlocConsumer<ShopCubit, ShopStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -37,16 +40,10 @@ class ShopLayout extends StatelessWidget {
             ),
             body: cubit.bottomScreens[cubit.currentIndex],
             floatingActionButton: FloatingActionButton(
-              onPressed: ()
-              {
-                CacheHelper.removeData(key: 'token').then((value)
-                {
-                  if(value)
-                  {
-                    navigateAndFinish(
-                      context: context,
-                      widget: LoginScreen()
-                    );
+              onPressed: () {
+                CacheHelper.removeData(key: 'token').then((value) {
+                  if (value) {
+                    navigateAndFinish(context: context, widget: LoginScreen());
                   }
                 });
               },

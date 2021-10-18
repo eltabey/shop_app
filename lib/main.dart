@@ -53,18 +53,18 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (BuildContext context) =>AppCubit(),
+          create: (BuildContext context) => AppCubit(),
         ),
         BlocProvider(
-          create: (BuildContext context) =>LoginCubit()..userLogin(),
+          create: (BuildContext context) => LoginCubit(),
         ),
         BlocProvider(
-          create: (BuildContext context) =>ShopCubit()..getHomeData()..getFavorites()..getCategories()..getUserModel(),
+          create: (BuildContext context) => ShopCubit()
         ),
       ],
-      child: BlocConsumer<AppCubit,AppStates>(
-        listener: (context,state){},
-        builder: (context,state){
+      child: BlocConsumer<AppCubit, AppStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
           return MaterialApp(
             theme: ThemeData(
               bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -83,7 +83,6 @@ class MyApp extends StatelessWidget {
             //ShopLayout(),
           );
         },
-
       ),
     );
 
