@@ -14,12 +14,15 @@ import 'package:shop_app/modules/products/products_screen.dart';
 import 'package:shop_app/modules/settings/settings_screen.dart';
 import 'package:shop_app/shared/components/cmponents.dart';
 import 'package:shop_app/shared/network/end_poient.dart';
+import 'package:shop_app/shared/network/local/cache_helper.dart';
 import 'package:shop_app/shared/network/remote/dio_helper.dart';
 
 class ShopCubit extends Cubit<ShopStates> {
   ShopCubit() : super(ShopInitialStates());
 
   static ShopCubit get(context) => BlocProvider.of(context);
+
+  static String token = CacheHelper.getData(key: 'token');
 
   int currentIndex = 0;
 
@@ -41,30 +44,24 @@ class ShopCubit extends Cubit<ShopStates> {
   Map<int, bool> favorites = {};
 
   void getHomeData() {
-    print('home dataaaa');
+    //print('home dataaaa');
     emit(ShopLoadingHomeDataStates());
     DioHelper.getData(
       url: HOME,
       token: token,
     ).then((value) {
+      //print(token + 'from get home Data');
       homeModel = HomeModel.fromJson(value.data);
-      // print(homeModel.data.banners[0].image);
-      // print(homeModel.status);
-      homeModel.data.products.forEach((element)
-      {
+      homeModel.data.products.forEach((element) {
         favorites.addAll({
           element.id: element.inFavorites,
         });
         //print(favorites.toString());
-        //print('gat han favorites ');
-
       });
-      //print('gat han HomeData 1');
 
       emit(ShopSuccessHomeDataStates());
     }).catchError((error) {
       //print(error.toString());
-      //print('gat han2');
       emit(ShopErrorCategoriesStates());
     });
   }
@@ -76,21 +73,16 @@ class ShopCubit extends Cubit<ShopStates> {
       url: GET_CATEGORIES,
       token: token,
     ).then((value) {
-      //print('value of Categories');
-      //print(value);
       categoriesModel = CategoriesModel.fromJson(value.data);
-      //print(value.data);
-      //print('gat han Categories 1');
-
       emit(ShopSuccessCategoriesStates());
     }).catchError((error) {
-      //print(error.toString());
-      //print('gat han2');
       emit(ShopErrorHomeDataStates());
     });
   }
 
   ChangeFavoritesModel changeFavoritesModel;
+
+
 
   void changeFavorites(int productId) {
     favorites[productId] = !favorites[productId];
@@ -105,64 +97,47 @@ class ShopCubit extends Cubit<ShopStates> {
     ).then((value) {
       changeFavoritesModel = ChangeFavoritesModel.fromJson(value.data);
       //print('gat changeFavorites');
-
       //print(value.data);
-      /*if(!changeFavoritesModel.status)
-      {
+      if (!changeFavoritesModel.status) {
         favorites[productId] = !favorites[productId];
-      }*/
+      }
       emit(ShopSuccessChangeFavoritesStates(changeFavoritesModel));
     }).catchError((error) {
-      //favorites[productId] = !favorites[productId];
+      favorites[productId] = !favorites[productId];
       emit(ShopErrorChangeFavoritesStates());
-
-      //print('gat changeFavorites error');
 
     });
   }
-
 
   FavoritesModel favoritesModel;
 
   void getFavorites() {
-
-    print('get favourite');
     DioHelper.getData(
       url: FAVORITES,
       token: token,
     ).then((value) {
-      //print('value of Categories');
+      //print(token + 'from get Favorites');
       //print(value);
-      print('han55555555555555');
       favoritesModel = FavoritesModel.fromJson(value.data);
-      //print(value.data.toString());
-      //print('gat han FAVORITES 1');
-
       emit(ShopSuccessGetFavoritesStates());
     }).catchError((error) {
-      //print(error.toString());
-      //print('gat error han FAVORITES 2');
       emit(ShopErrorGetFavoritesStates());
     });
   }
 
-
   LoginModel userModel;
 
   void getUserModel() {
-    
     emit(ShopLoadingGetUserDataStates());
     DioHelper.getData(
       url: PROFILE,
       token: token,
     ).then((value) {
-
       print('profile data => ${value}');
       userModel = LoginModel.fromJson(value.data);
       print(userModel.data.name);
-      emit(ShopSuccessGetUserDataStates());
+      emit(ShopSuccessGetUserDataStates(userModel));
     }).catchError((error) {
-      print(error.toString());
       emit(ShopErrorGetUserDataStates());
     });
   }

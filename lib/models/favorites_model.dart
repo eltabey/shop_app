@@ -3,13 +3,11 @@ class FavoritesModel {
   Null message;
   Data data;
 
-
   FavoritesModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
-
 }
 
 class Data {
@@ -25,7 +23,6 @@ class Data {
   Null prevPageUrl;
   int to;
   int total;
-
 
   Data.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
@@ -46,19 +43,18 @@ class Data {
     to = json['to'];
     total = json['total'];
   }
-
-
 }
 
 class FavoritesData {
   int id;
   Product product;
 
+  FavoritesData({this.id, this.product});
 
   FavoritesData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     product =
-    json['product'] != null ? new Product.fromJson(json['product']) : null;
+        json['product'] != null ? new Product.fromJson(json['product']) : null;
   }
 }
 
@@ -73,12 +69,12 @@ class Product {
 
   Product(
       {this.id,
-        this.price,
-        this.oldPrice,
-        this.discount,
-        this.image,
-        this.name,
-        this.description});
+      this.price,
+      this.oldPrice,
+      this.discount,
+      this.image,
+      this.name,
+      this.description});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -89,5 +85,4 @@ class Product {
     name = json['name'];
     description = json['description'];
   }
-
 }

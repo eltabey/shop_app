@@ -20,7 +20,8 @@ class FavoritesScreen extends StatelessWidget {
                   context),
               //ShopCubit.get(context).categoriesModel.data.data[index]),
               separatorBuilder: (context, index) => myDivider(),
-              itemCount: ShopCubit.get(context).favoritesModel.data.data.length,
+              itemCount: 100,
+              //ShopCubit.get(context).favoritesModel.data.data.length,
             );
           }),
     );
@@ -37,6 +38,7 @@ class FavoritesScreen extends StatelessWidget {
                 alignment: AlignmentDirectional.bottomStart,
                 children: [
                   Image(
+                    //image: NetworkImage('https://student.valuxapps.com/storage/uploads/products/1615450256e0bZk.item_XXL_7582156_7501823.jpeg'),
                     image: NetworkImage(model.product.image),
                     height: 120,
                     width: 120,
@@ -93,7 +95,7 @@ class FavoritesScreen extends StatelessWidget {
                               decoration: TextDecoration.lineThrough,
                             ),
                           ),
-                        Spacer(),
+                        /*Spacer(),
                         IconButton(
                           onPressed: () {
                             ShopCubit.get(context)
@@ -113,7 +115,7 @@ class FavoritesScreen extends StatelessWidget {
                               size: 14.0,
                             ),
                           ),
-                        )
+                        )*/
                       ],
                     ),
                   ],

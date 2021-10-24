@@ -15,8 +15,9 @@ class ShopLayout extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => ShopCubit()
         ..getHomeData()
-        ..getCategories(),
-
+        ..getCategories()
+        ..getFavorites()
+        ..getUserModel(),
       child: BlocConsumer<ShopCubit, ShopStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -39,16 +40,6 @@ class ShopLayout extends StatelessWidget {
               ],
             ),
             body: cubit.bottomScreens[cubit.currentIndex],
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                CacheHelper.removeData(key: 'token').then((value) {
-                  if (value) {
-                    navigateAndFinish(context: context, widget: LoginScreen());
-                  }
-                });
-              },
-              child: Text('Sign out'),
-            ),
             bottomNavigationBar: BottomNavigationBar(
               onTap: (index) {
                 cubit.changeBottom(index);
