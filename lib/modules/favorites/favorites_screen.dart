@@ -1,3 +1,4 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,18 +11,25 @@ class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ShopCubit()..getFavorites(),
+      create: (BuildContext context) => ShopCubit(),
       child: BlocConsumer<ShopCubit, ShopStates>(
           listener: (context, state) {},
           builder: (context, state) {
-            return ListView.separated(
-              itemBuilder: (context, index) => buildFavItem(
-                  ShopCubit.get(context).favoritesModel.data.data[index],
-                  context),
-              //ShopCubit.get(context).categoriesModel.data.data[index]),
-              separatorBuilder: (context, index) => myDivider(),
-              itemCount: 100,
-              //ShopCubit.get(context).favoritesModel.data.data.length,
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ConditionalBuilder(
+                condition: ShopCubit.get(context).favoritesModel != null,
+                builder: (context) => ListView.separated(
+                  itemBuilder: (context, index) => buildFavItem(
+                      ShopCubit.get(context).favoritesModel.data.data[index],
+                      context),
+                  //ShopCubit.get(context).categoriesModel.data.data[index]),
+                  separatorBuilder: (context, index) => myDivider(),
+                  itemCount: 100,
+                  //ShopCubit.get(context).favoritesModel.data.data.length,
+                ),
+                fallback: (context) => Center(child: CircularProgressIndicator()),
+              ),
             );
           }),
     );

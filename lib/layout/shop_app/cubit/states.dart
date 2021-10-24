@@ -27,19 +27,15 @@ class ShopSuccessChangeFavoritesStates extends ShopStates {
 
 class ShopErrorChangeFavoritesStates extends ShopStates {}
 
-
-
 class ShopLoadingGetFavoritesStates extends ShopStates {}
 
 class ShopSuccessGetFavoritesStates extends ShopStates {}
 
 class ShopErrorGetFavoritesStates extends ShopStates {}
 
-
 class ShopLoadingGetUserDataStates extends ShopStates {}
 
-class ShopSuccessGetUserDataStates extends ShopStates
-{
+class ShopSuccessGetUserDataStates extends ShopStates {
   final LoginModel loginmodel;
 
   ShopSuccessGetUserDataStates(this.loginmodel);
@@ -47,6 +43,15 @@ class ShopSuccessGetUserDataStates extends ShopStates
 
 class ShopErrorGetUserDataStates extends ShopStates {}
 
+class ShopLoadingUpdateUserStates extends ShopStates {}
+
+class ShopSuccessUpdateUserStates extends ShopStates {
+  final LoginModel loginmodel;
+
+  ShopSuccessUpdateUserStates(this.loginmodel);
+}
+
+class ShopErrorUpdateUserStates extends ShopStates {}
 /*
 
 
