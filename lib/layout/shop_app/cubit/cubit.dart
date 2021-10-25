@@ -93,6 +93,7 @@ class ShopCubit extends Cubit<ShopStates> {
       },
       token: token,
     ).then((value) {
+      print('value => ${value}');
       changeFavoritesModel = ChangeFavoritesModel.fromJson(value.data);
       //print('gat changeFavorites');
       //print(value.data);
@@ -116,6 +117,12 @@ class ShopCubit extends Cubit<ShopStates> {
       //print(token + 'from get Favorites');
       //print(value);
       favoritesModel = FavoritesModel.fromJson(value.data);
+      for (var product in favoritesModel.data.data) {
+        favorites.addAll({
+          product.product.id: true,
+        });
+      }
+
       emit(ShopSuccessGetFavoritesStates());
     }).catchError((error) {
       emit(ShopErrorGetFavoritesStates());

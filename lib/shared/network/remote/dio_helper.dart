@@ -48,6 +48,7 @@ class DioHelper {
       //"Accept": "application/json"
     };
 
+    print('dataaaaaa => $data');
     return dio.post(
       url,
       queryParameters: query,
